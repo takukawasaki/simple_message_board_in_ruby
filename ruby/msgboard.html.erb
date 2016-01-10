@@ -1,0 +1,67 @@
+<%
+require '../cgi-bin/msg_lib.rb'
+con = DataController.new
+
+%>
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>rb</title>
+    <script type="text/javascript">
+     function showContent(n){
+         document.form1.mode.value = "content";
+         document.form1.sel.value = n;
+         document.form1.submit();
+     };
+    </script>
+
+    
+  </head>
+  <body>
+    <h2>small message board</h2>
+    <form action="msgboard.html.erb" method="post" name="form1">
+      <input name="mode" type="hidden" value=""/>
+      <input name="sel" type="hidden" value="0"/>
+      
+    </form>
+    <form action="msgboard.html.erb" name="sendform" method="post">
+      <input name="mode" type="hidden" value="add"/>
+      <table>
+        <tr>
+          <td>username: </td>
+          <td><input name="name" type="text" value=""/></td>
+        </tr>
+
+        <tr>
+          <td>Password: </td>
+          <td><input name="pass" type="password" value=""/></td>
+        </tr>
+
+        
+        <tr>
+          <td>title: </td>
+          <td><input name="title" type="text" value=""/></td>
+        </tr>
+
+        <tr>
+          <td>shorten: </td>
+          <td><input name="abst" type="text" value=""/></td>
+        </tr>
+
+        <tr>
+          <td>content: </td>
+          <td><textarea cols="" id="" name="content" rows=""></textarea></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td><input name="" type="submit" value="send"/></td>
+        </tr>
+      </table>
+    </form>
+    <hr/>
+    <%= con.result %>
+  </body>
+</html>

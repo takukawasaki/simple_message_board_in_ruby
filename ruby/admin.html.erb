@@ -1,0 +1,64 @@
+<%
+
+require 'cgi'
+require 'cgi/session'
+require '../cgi-bin/msg_lib.rb'
+
+
+def printForm
+    result = ""
+    result=<<'EOB'
+    <table>
+    <form action="admin.html.erb" method="post">
+        <input name="mode" type="hidden" value="add"/>
+        <tr>
+        <td>ID: </td>
+        <td><input name="id" type="text" value=""/></td>
+        </tr>
+        <tr>
+        <td>PASSWORD: </td>
+        <td><input name="pass" type="text" value=""/></td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><input name="submit1" type="submit" value="send"/></td>
+        </tr>
+        </form>
+    </table>
+EOB
+return result
+end
+
+con = UserController.new
+cgi = con.cgi
+msg = ""
+
+begin
+session = CGI::Session.new(cgi, {'new_session' => false})
+id = session['id']
+if id != ''
+    msg = "Please enter a name and password. <br><br>"
+    msg += printForm
+    msg += '<hr>'
+    msg += con.result
+else
+    msg = "not logged in"
+end
+rescue
+msg = 'You do not have permission to access this page.'
+end
+%>
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>User registration</title>
+  </head>
+  <body>
+    <h3>registration</h3>
+    <%= msg %>
+  </body>
+</html>
